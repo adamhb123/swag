@@ -2,7 +2,7 @@ from ast import Return
 from datetime import datetime
 from pprint import pprint
 from re import compile, escape, I
-from typing import Any, Dict, List, Mapping
+from typing import Any, Dict, List, Mapping, Union
 from pymongo import InsertOne, ReplaceOne, MongoClient, UpdateOne, ReturnDocument
 from pymongo.command_cursor import CommandCursor
 from os import environ
@@ -86,7 +86,7 @@ def _create_sort(arguments, **kwargs):
         return kwargs
 
 
-def delete_item(item_id: str | ObjectId, requester):
+def delete_item(item_id: Union[str,ObjectId], requester):
     if type(item_id) == str:
         item_id = ObjectId(item_id)
     _purchase = _items.find_one({'_id': item_id})
@@ -125,7 +125,7 @@ def get_item(name):
     return _items.find_one({'name': name})
 
 
-def get_item_by_id(id: str | ObjectId):
+def get_item_by_id(id: Union[str, ObjectId]):
     if type(id) == str:
         if not ObjectId.is_valid(id):
             return None
@@ -254,7 +254,7 @@ class DuplicateData:
         self.count = count
 
 
-def collapse_duplicates(collection: CommandCursor | List, onField: str) -> List[DuplicateData]:
+def collapse_duplicates(collection: Union[CommandCursor, List], onField: str) -> List[DuplicateData]:
     if type(collection) == CommandCursor:
         collection = list(collection)
     collapsed = []
