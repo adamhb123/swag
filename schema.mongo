@@ -1,0 +1,173 @@
+db.createCollection("items", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         title: "Item Object Validation",
+         required: [ "name", "price", "quantity", "active", "seller", "info", "date" ],
+         properties: {
+            name: {
+               bsonType: "string",
+               description: "'name' must be a string and is required"
+            },
+            price: {
+               bsonType: "int",
+               minimum: 0,
+               description: "'price' must be an integer >= 0 and is required"
+            },
+            quantity: {
+               bsonType: "int",
+               minimum: 0,
+               description: "'quantity' must be an integer >= 0 and is required"
+            },
+            active: {
+               bsonType: "bool",
+               description: "'active' must be a boolean and is required"
+            },
+            seller: {
+               bsonType: "string",
+               description: "'seller' must be a string and is required"
+            },
+            info: {
+               bsonType: "string",
+               description: "'info' must be a string and is required"
+            },
+            date: {
+               bsonType: "date",
+               description: "'date' must be a date and is required"
+            },
+         }
+      }
+   }
+})
+
+db.createCollection("deletedItems", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         title: "Deleted Item Object Validation",
+         required: [ "name", "price", "quantity", "active", "seller", "info", "date" ],
+         properties: {
+            name: {
+               bsonType: "string",
+               description: "'name' must be a string and is required"
+            },
+            price: {
+               bsonType: "int",
+               minimum: 0,
+               description: "'price' must be an integer >= 0 and is required"
+            },
+            quantity: {
+               bsonType: "int",
+               minimum: 0,
+               description: "'quantity' must be an integer >= 0 and is required"
+            },
+            active: {
+               bsonType: "bool",
+               description: "'active' must be a boolean and is required"
+            },
+            seller: {
+               bsonType: "string",
+               description: "'seller' must be a string and is required"
+            },
+            info: {
+               bsonType: "string",
+               description: "'info' must be a string and is required"
+            },
+            date: {
+               bsonType: "date",
+               description: "'date' must be a date and is required"
+            },
+         }
+      }
+   }
+})
+
+db.createCollection("purchases", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         title: "Purchase Object Validation",
+         required: [ "buyer", "item_id", "quantity", "date", "fulfilled", "paymentMethod" ],
+         properties: {
+            buyer: {
+               bsonType: "string",
+               description: "'buyer' must be a string and is required"
+            },
+            item_id: {
+               bsonType: "objectId",
+               description: "'item_id' must be an ObjectId and is required"
+            },
+            quantity: {
+               bsonType: "int",
+               minimum: 0,
+               description: "'item_id' must be an integer > 0 and is required"
+            },
+            date: {
+               bsonType: "date",
+               description: "'date' must be a date and is required"
+            },
+            fulfilled: {
+               bsonType: "bool",
+               description: "'fulfilled' must be a boolean and is required"
+            },
+            paymentMethod: {
+               bsonType: ["string", "null"],
+               description: "'paymentMethod' must be a string"
+            },
+         }
+      }
+   }
+})
+
+db.createCollection("deletedPurchases", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         title: "Deleted Purchase Object Validation",
+         required: [ "buyer", "item_id", "quantity", "date", "fulfilled", "paymentMethod" ],
+         properties: {
+            buyer: {
+               bsonType: "string",
+               description: "'buyer' must be a string and is required"
+            },
+            item_id: {
+               bsonType: "objectId",
+               description: "'item_id' must be an ObjectId and is required"
+            },
+            quantity: {
+               bsonType: "int",
+               minimum: 0,
+               description: "'item_id' must be an integer > 0 and is required"
+            },
+            date: {
+               bsonType: "date",
+               description: "'date' must be a date and is required"
+            },
+            fulfilled: {
+               bsonType: "bool",
+               description: "'fulfilled' must be a boolean and is required"
+            },
+            paymentMethod: {
+               bsonType: ["string", "null"],
+               description: "'paymentMethod' must be a string"
+            },
+         }
+      }
+   }
+})
+
+db.createCollection("managers", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         title: "Manager Object Validation",
+         required: [ "username" ],
+         properties: {
+            username: {
+               bsonType: "string",
+               description: "'username' must be a string and is required"
+            }
+         }
+      }
+   }
+})

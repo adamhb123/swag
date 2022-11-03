@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block header %}
+<h2 class="mt-4">{{title if title else 'Swag'}}</h2>
+{% endblock %}
+{% block item_grid %}
+    {% for group in items|groupby('purchase.fulfilled') %}
+        {% with items=group.list %}
+            <h4 class="order-group-status-descriptor">{{'Fulfilled' if group.grouper else 'In Progress'}}</h4>
+            {% include "item-grid.html" %}
+        {% endwith %}
+    {% endfor %}
+{% endblock %}

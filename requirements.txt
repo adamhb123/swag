@@ -1,0 +1,7 @@
+boto3
+flask
+flask-markdown
+flask-pyoidc
+flask-wtf
+gunicorn
+pymongo

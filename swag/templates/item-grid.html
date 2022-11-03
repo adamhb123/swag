@@ -1,0 +1,195 @@
+{% for row in items|batch(4) %}
+<div class="row">
+    {% for item in row %}
+    <div class="col-12 col-lg-3 col-md-6 col-sm-6 my-3">
+        <div class="card {{('fulfilled' if item.purchase.fulfilled else 'unfulfilled') if item.purchase is defined}}">
+            {% if item.purchase is defined %}
+            {% if item.purchase.fulfilled %}
+            <span class="card-infobar card-fulfilled-date">Completed on: {{ format_date(item.purchase.dateFulfilled) if
+                item.purchase.dateFulfilled else 'UNKNOWN'}}</span>
+            {% else %}
+            <span class="card-infobar card-ordered-date">
+                Ordered on: {{format_date(item.purchase.date)}}
+            </span>
+            {% endif %}
+            {% endif %}
+            <a href="/item/{{item._id}}">
+                <img alt="{{item.name}}" class="card-img" src="{{image_url}}/{{item._id}}.jpg" title="{{item.name}}">
+            </a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="/item/{{item._id}}">{{item.name}}</a>
+                    <!--{% if item.new %}
+                    <span class="badge badge-primary">New</span>
+                    {% endif %}-->
+                    {% if item.purchase is defined %}
+                    {% if item.purchase.fulfilled %}
+                    <span class="badge badge-success">Fulfilled</span>
+                    {% else %}
+                    <span class="badge badge-warning">In Progress...</span>
+                    {% endif %}
+                    {% endif %}
+                </h4>
+                <div class="card-details">
+                    <hr class="card-divider" />
+                    {% if item.purchase %}
+                    <div class="row">
+                        <span class="card-detail card-purchase-id">ID: <span
+                                class="card-detail-value card-purchase-id-value">{{ item.purchase._id }}</span></span>
+                    </div>
+                    <div class="row">
+                        <span class="card-detail">
+                            {% if item.seller == 'CSH' or item.seller is none %}
+                            <span>Buyer: <strong>CSH</strong></span>
+                            {% else %}
+                            <span>Buyer: <a
+                                    href="https://profiles.csh.rit.edu/user/{{item.seller}}">{{item.purchase.buyer}}</a></span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="row">
+                        <span class="card-detail card-purchase-date">Ordered: <span
+                                class="card-detail-value card-purchase-date-value">{{ format_date(item.purchase.date)
+                                }}</span></span>
+                    </div>
+                    <div class="row">
+                        <span class="card-detail card-purchase-date-fulfilled">Fulfilled: <span
+                                class="card-detail-value card-purchase-date-fulfilled-value">{{
+                                format_date(item.purchase.dateFulfilled) }}</span></span>
+                    </div>
+                    {% else %}
+                    <strong>Info: </strong>{{item.info}}
+                    <hr class="card-divider" />
+                    <div class="row justify-content-between">
+                        <span class="card-detail">
+                            {% if item.seller == 'CSH' or item.seller is none %}
+                            Seller: <strong>CSH</strong>
+                            {% else %}
+                            Seller: <a href="https://profiles.csh.rit.edu/user/{{item.seller}}">{{item.seller}}</a>
+                            {% endif %}
+                        </span>
+                        <span class="card-detail">
+                            {% if item.price is defined %}
+                            Price: <span class="price-value-span">${{item.price}}</span>
+                            {% else %}
+                            Price: <span class="price-value-span">$???</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if management_mode and item.purchase %}
+            <div class="card-manage card-footer row justify-content-between">
+                <div class="modal fade" id="payment-method-modal" tabindex="-1" role="dialog"
+                    aria-labelledby="payment method modal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Payment Method</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="col">
+                                    <div
+                                        class="card {{('fulfilled' if item.purchase.fulfilled else 'unfulfilled') if item.purchase is defined}}">
+                                        {% if item.purchase is defined %}
+                                        {% if item.purchase.fulfilled %}
+                                        <span class="card-infobar card-fulfilled-date">Completed on: {{
+                                            format_date(item.purchase.dateFulfilled) if
+                                            item.purchase.dateFulfilled else 'UNKNOWN'}}</span>
+                                        {% else %}
+                                        <span class="card-infobar card-ordered-date">
+                                            Ordered on: {{format_date(item.purchase.date)}}
+                                        </span>
+                                        {% endif %}
+                                        {% endif %}
+                                        <a href="/item/{{item._id}}">
+                                            <img alt="{{item.name}}" class="card-img"
+                                                src="{{image_url}}/{{item._id}}.jpg" title="{{item.name}}">
+                                        </a>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <a href="/item/{{item._id}}">{{item.name}}</a>
+                                                <!--{% if item.new %}
+                                                <span class="badge badge-primary">New</span>
+                                                {% endif %}-->
+                                                {% if item.purchase is defined %}
+                                                {% if item.purchase.fulfilled %}
+                                                <span class="badge badge-success">Fulfilled</span>
+                                                {% else %}
+                                                <span class="badge badge-warning">In
+                                                    Progress...</span>
+                                                {% endif %}
+                                                {% endif %}
+                                            </h4>
+                                            {% if item.purchase %}<span class="card-purchase-id">ID: <span
+                                                    class="card-purchase-id-value">{{ item.purchase._id
+                                                    }}</span></span>{% endif %}
+                                        </div>
+                                        <div class="card-footer row justify-content-between">
+                                            <div class="card-seller col">
+                                                <span>
+                                                    {% if item.seller == 'CSH' or item.seller is none %}
+                                                    Seller: <strong>CSH</strong>
+                                                    {% else %}
+                                                    Seller: <a
+                                                        href="https://profiles.csh.rit.edu/user/{{item.seller}}">{{item.seller}}</a>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="card-price col">
+                                                <span>
+                                                    {% if item.price is not none %}
+                                                    Price: <span class="price-value-span">${{item.price}}</span>
+                                                    {% else %}
+                                                    Price: <span class="price-value-span">$???</span>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <form id="payment-method-form" method="post"
+                                        action="/order/fulfill/{{item.purchase._id}}" class="form-inline">
+                                        <label id="payment-method-label" for="payment-method">Payment Method:</label>
+                                        <select class="form-control mx-auto" name="payment-method">
+                                            <option value="venmo">Venmo</option>
+                                            <option value="cash">Cash</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </form>
+                                    <div class="terminal-buttons-container">
+                                        <button type="submit" class="btn btn-primary"
+                                            form="payment-method-form">Finalize Order</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success" {% if not item.purchase.fulfilled %} data-toggle="modal"
+                    data-target="#payment-method-modal" data-item="{{item}}" {% endif %}>
+                    Fulfill
+                </button>
+                <button type="button" class="btn btn-danger" {% if not item.purchase.fulfilled %}
+                    onclick="let f = Object.assign(document.createElement('form'),{method: 'post', action: '/order/cancel/{{item.purchase._id}}'}); document.body.appendChild(f); f.submit();"
+                    {% endif %}>Cancel</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+{% if title is undefined or title == 'index' %}
+<h2 class="mt-4">CSH Swag Marketplace</h2>
+{% endif %}
+<div class="jumbotron mt-3">
+    <h4>No swag found.</h4>
+</div>
+{% endfor %}

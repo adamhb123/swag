@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 col-lg-6 col-md-10 col-sm-10 mx-auto my-3">
+        <div class="card">
+            <a href="{{item.link}}">
+                <img alt="{{item.name}}" class="card-img-top card-img-top-large" src="{{image_url}}/{{item._id}}.jpg" title="{{item.name}}">
+            </a>
+            <div class="card-body">
+                <h1 class="card-title">
+                    <a href="{{item.link}}">{{item.name}}</a>
+                    <!--{% if item.new %}
+                    <span class="badge badge-success">New</span>
+                    {% endif %}-->
+                </h1>
+                <hr>
+                {% if item.info %}
+                <h2>Info</h2>
+                <blockquote class="blockquote" style="white-space: pre-wrap;" >{{item.info}}</blockquote>
+                {% endif %}
+            </div>
+            <div class="card-footer row">
+                <div class="col fit-content">
+                    <div class="card-seller">Seller:
+                        {% if item.seller == 'CSH' %}
+                        <strong>CSH</strong>
+                        {% else %}
+                        <a href="https://profiles.csh.rit.edu/user/{{item.seller}}">
+                            <!--<img class="card-seller-img" alt="{{item.seller}}" src="https://profiles.csh.rit.edu/image/{{item.seller if item.seller != 'CSH' else 'potate'}}" title="{{item.seller}}">
+                            -->
+                        </a>
+                        {% endif %}
+                    </div>
+                    <!--
+                    <li class="list-inline-item">Submitter: </li>
+                    <li class="list-inline-item">
+                        <a href="https://profiles.csh.rit.edu/user/{{item.submitter}}">
+                            <img alt="{{item.submitter}}" src="https://profiles.csh.rit.edu/image/{{item.submitter}}" title="{{item.submitter}}">
+                        </a>
+                    </li>-->
+                    <div class="card-price">Price:
+                        {% if item.price is not none %}
+                            <span class="price-value-span">${{item.price}}</span>
+                        {% else %}
+                            <span>$???</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col fit-content">
+                    <form action="/buy/{{item._id}}" method="POST" class="form">
+                        <div class="card-buy row">
+                            <label id="quantity" for="quantity" class="fit-content">Quantity ({{item.quantity}} in stock):</label>
+                            {% if item.active %}
+                                <input type="number" id="quantity" name="quantity" min="1" max="{{item.quantity}}" value="1" class="form-control fit-content" required>
+                                <button class="btn btn-success" type="submit" onClick="this.form.submit(); this.disabled=true; this.value='Sending…';">Purchase</button>
+                            {% else %}
+                                <input type="number" id="quantity" name="quantity" min="1" max="{{item.quantity}}" value="1" class="form-control fit-content" required disabled>
+                                <button class="btn btn-secondary" type="submit" disabled>{{ "Unavailable" if item.quantity > 0 else "Sold Out"}}</button>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+                <!--{% if item.rules %}
+                <li class="list-inline-item">Contributors: </li>
+                <li class="list-inline-item">
+                    {% for contributor in item.rules.contributors %}
+                    <a href="https://profiles.csh.rit.edu/user/{{contributor}}">
+                        <img alt="{{contributor}}" src="https://profiles.csh.rit.edu/image/{{contributor}}" title="{{contributor}}">
+                    </a>
+                    {% endfor %}
+                </li>
+                {% endif %}-->
+            </div>
+            {% if manager or item.submitter == session['userinfo']['preferred_username'] %}
+                <div class="card-manage card-footer" style="position: relative;">
+                    <span style="    text-align: center;
+                    position: absolute;
+                    font-size: 1.1rem;
+                    margin: auto;
+                    font-weight: bold;
+                    left: 4%;
+                    top: 50%;
+                    line-height: 0;">Manage Item: </span>
+                    <li class="list-inline-item" style="float:right; padding-left:5px;">
+                        <form action="/delete/{{item._id}}" method="POST">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </li>
+                    <li class="list-inline-item" style="float:right; padding-left:5px;">
+                        <form action="/edit/{{item._id}}" method="POST">
+                            <button class="btn btn-warning" type="submit">Edit</button>
+                        </form>
+                    </li>
+                </div>
+                {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

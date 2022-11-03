@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 col-lg-6 col-md-10 col-sm-10 mx-auto my-3">
+        <form class="card" enctype="multipart/form-data" method="POST">
+            <div class="card-body">
+                {% if error %}
+                <div class="alert alert-danger">
+                    <strong>Error: </strong>{{error}}
+                </div>
+                {% endif %}
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2 col-sm-12">Image: </label>
+                    <div class="col-md-10 col-sm-12">
+                        {% if item is defined %}
+                        <input accept="image/jpeg" class="form-control" name="image" type="file">
+                        {% else %}
+                        <input accept="image/jpeg" class="form-control" name="image" required type="file">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-5 col-sm-12">Link (wiki, docs, etc.): </label>
+                    <div class="col-md-7 col-sm-12">
+                        {% if item is defined and item['link'] %} 
+                        <input class="form-control" name="link" value="{{item['link']}}">
+                        {% else %}
+                        <input class="form-control" name="link" value="{{form.link.data}}">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2 col-sm-12">Name: </label>
+                    <div class="col-md-10 col-sm-12">
+                        {% if item is defined and item['name'] %} 
+                        <input class="form-control" name="name" required value="{{item['name']}}">
+                        {% else %}
+                        <input class="form-control" name="name" required value="{{form.name.data}}">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2 col-sm-12">Price: </label>
+                    <div class="col-md-10 col-sm-12">
+                        {% if item is defined and item['price'] %} 
+                        <input class="form-control" name="price" required type="number" value="{{item['price']}}">
+                        {% else %}
+                        <input class="form-control" name="price" type="number" required value="{{form.price.data}}">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2 col-sm-12">Quantity: </label>
+                    <div class="col-md-10 col-sm-12">
+                        {% if item is defined and item['quantity'] %} 
+                        <input class="form-control" name="quantity" required type="number" value="{{item['quantity']}}">
+                        {% else %}
+                        <input class="form-control" name="quantity" type="number" required value="{{form.quantity.data}}">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2 col-sm-12">Active: </label>
+                    <div class="col-md-10 col-sm-12">
+                        <input class="form-control" id="active-checkbox" name="active" type="checkbox">
+                        <script>
+                            const active_value = "{{item['active'] if item is defined else form.active.data }}".toLowerCase() == 'false' ? false : true;
+                            document.getElementById("active-checkbox").checked = active_value;
+                        </script>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2 col-sm-12">Seller: </label>
+                    <div class="col-md-10 col-sm-12">
+                        <select class="form-control" name="seller" required>
+                            <option {{ 'selected ' if form.seller.data == session['userinfo']['preferred_username'] }} value="{{session['userinfo']['preferred_username']}}">{{session['userinfo']['preferred_username']}}</option>
+                            <option {{ 'selected ' if form.seller.data == 'CSH' }} value="CSH">CSH</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2 col-sm-12">Info: </label>
+                    {% if item is defined and item['info'] %} 
+                    <textarea class="form-control" name="info" rows="5" required value="">{{item['info']}}</textarea>
+                    {% else %}
+                    <textarea class="form-control" name="info" rows="5" required value="{{form.info.data}}"></textarea>
+                    {% endif %}
+                </div>
+                <input class="form-control" type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

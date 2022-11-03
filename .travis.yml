@@ -1,0 +1,3 @@
+language: python
+python: '3.10'
+script: python -m py_compile stuff/*.py wsgi.py

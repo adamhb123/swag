@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="{{image_url}}/favicon.png" rel="icon" type="image/png">
+    <link href="https://themeswitcher.csh.rit.edu/api/get" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+    <meta content="initial-scale=1, width=device-width" name="viewport">
+    <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script crossorigin="anonymous" defer
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" defer
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="/static/script.js"></script>
+    <title>CSH Swag</title>
+</head>
+
+<body>
+    <nav class="bg-primary navbar navbar-dark navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Swag</a>
+            <button class="navbar-toggler navbar-toggler-right" data-target="#collapse" data-toggle="collapse"
+                type="button"><span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapse">
+                <ul class="navbar-nav">
+                    <li>
+                        <a class="nav-link" href="/">Catalog</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/my-purchases">Your Swag</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/submit">Submit</a>
+                    </li>
+                    {% if manager %}
+                    <li>
+                        <a id="manage-nav" class="nav-link" href="/manage-orders">Manage Orders</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% if request.path == "/" %}
+                <form action="/" class="ml-auto">
+                    <div class="input-group">
+                        <input autofocus class="form-control" name="name" placeholder="Search" type="text"
+                            value="{{request.args['name']}}">
+                        <div class="dropdown input-group-append">
+                            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                type="button"></button>
+                            <div class="dropdown-menu form-inline px-2">
+                                <div class="form-group">
+                                    <label class="mx-auto">Seller:</label>
+                                    <select class="form-control mx-auto" name="seller">
+                                        <option value="">Any</option>
+                                        {% for seller in sellers %}
+                                        <option{% if request.args.get('seller', '' )==seller %} selected{% endif %}
+                                            value="{{seller}}">{{seller}}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>
+                                <!--<div class="form-group">
+                                        <label class="mx-auto">Submitter:</label>
+                                        <select class="form-control mx-auto" name="submitter">
+                                            <option value="">Any</option>
+                                            {% for submitter in submitters %}
+                                            <option{% if request.args.get('submitter', '') == submitter %} selected{% endif %} value="{{submitter}}">{{submitter}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>-->
+                                <div class="btn-toolbar mt-2">
+                                    <button class="btn btn-primary btn-sm mx-auto" type="submit">Search</button>
+                                    <button class="btn btn-primary btn-sm mx-auto" formaction="/random"
+                                        type="submit">Random</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{category if category is not none else 'success'}} mt-3">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer class="py-5 bg">
+        <div class="container">
+            <p class="m-0 text-center text-white">
+                <a href="https://github.com/adamhb123/swag">CSH | Swag</a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

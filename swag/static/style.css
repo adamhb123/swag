@@ -1,0 +1,193 @@
+.card {
+    overflow: hidden;
+}
+
+.btn {
+    font-weight: bold;
+}
+
+h4.order-group-status-descriptor {
+    margin: 0;
+}
+
+.card.fulfilled * {
+    opacity: .7;
+}
+
+.card.unfulfilled {
+}
+
+.card-divider {
+    margin: 5px -20px 5px -20px;
+}
+
+.card-detail {
+    font-weight: bold;
+}
+
+.card-detail .card-detail-value {
+    color: #b0197e;
+}
+
+.card-details {
+    padding: 0px 15px 0px 15px;
+    margin: 0;
+}
+
+.card-manage {
+    background-color: #eeeeee;
+}
+
+.card-manage .btn {
+    color: white;
+}
+
+.card-manage.card-footer {
+    margin: 0;
+}
+
+.card-seller .row {
+    margin: 0;
+}
+
+.terminal-buttons-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-right: 15px;
+}
+
+.modal-footer {
+    justify-content: flex-end;
+}
+
+.navbar-brand {
+    transition: all .7s;
+}
+
+.navbar-brand:hover {
+    transition: all .7s;
+    filter: drop-shadow(0px 0px 3px gold);
+}
+
+#manage-nav {
+    color: hsl(64deg 100% 82% / 75%);;
+}
+#manage-nav:hover {
+    color: #f9ffa4;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    font-weight: bold;
+}
+
+.card-seller {
+    padding: 0;
+    text-align: left;
+}
+
+.card-seller-img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right: 0.3rem;
+}
+
+.card-price {
+    padding: 0;
+    text-align: right;
+}
+
+.card-fulfilled-date {
+    background-color: #006c08;
+    opacity: 1 !important;
+}
+
+.card-infobar {
+    color: white;
+    font-size: .75rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-ordered-date {
+    background-color: #bf126a;
+}
+
+.card-ordered-date + a > img {
+    border-radius: 0;
+}
+
+.card-img {
+    height: 175px;
+    object-fit: cover;
+    object-position: 50% top;
+    transition: filter 0.2s;
+}
+
+.card-img:hover {
+    filter: blur(2px);
+}
+
+.list-item.card-price, .list-item.card-seller {
+    display: block;
+    float: left;
+    clear:left;
+}
+
+.fit-content {
+    flex-basis: fit-content;
+}
+
+
+.card-body {
+    padding: 0.5rem 1.25rem 0.5rem 1.25rem;
+}
+
+.card-title {
+    margin-bottom: 0;
+}
+
+.card-title .badge {
+    float: right;
+}
+
+.card-buy {
+    flex-wrap: nowrap;
+    align-items: baseline;
+    justify-content: right;
+}
+
+.card-buy * {
+    margin: 0 5px 0 5px;
+}
+
+.card-buy button {
+    font-weight: bold;
+}
+
+.card-buy input#quantity {
+    height: 2rem;
+}
+
+.price-value-span {
+    font-weight: bold;
+    color: green;
+}
+
+.dropdown-menu {
+    left: auto;
+    min-width: 15rem;
+    position: absolute;
+    right: 0;
+}
+
+@media (min-width: 576px) {
+
+    .card-img-top-large {
+        height: auto;
+        max-height: 350px;
+    }
+
+}
