@@ -52,11 +52,13 @@
                                 class="card-detail-value card-purchase-date-value">{{ format_date(item.purchase.date)
                                 }}</span></span>
                     </div>
+                    {% if item.purchase.fulfilled %}
                     <div class="row">
                         <span class="card-detail card-purchase-date-fulfilled">Fulfilled: <span
                                 class="card-detail-value card-purchase-date-fulfilled-value">{{
                                 format_date(item.purchase.dateFulfilled) }}</span></span>
                     </div>
+                    {% endif %}
                     {% else %}
                     <strong>Info: </strong>{{item.info}}
                     <hr class="card-divider" />
@@ -79,7 +81,7 @@
                     {% endif %}
                 </div>
             </div>
-            {% if management_mode and item.purchase %}
+            {% if manager and item.purchase %}
             <div class="card-manage card-footer row justify-content-between">
                 <div class="modal fade" id="payment-method-modal" tabindex="-1" role="dialog"
                     aria-labelledby="payment method modal" aria-hidden="true">

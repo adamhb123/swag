@@ -178,7 +178,6 @@ def manage_purchases():
     return render_template(
         'manage.html',
         title="Order Management",
-        management_mode=True,
         items=list(get_purchases_with_items(request.args)),
         **_get_template_variables()
     )
