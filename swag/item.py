@@ -5,13 +5,6 @@ from flask_wtf.file import FileAllowed, FileField, FileRequired
 from wtforms import IntegerField, StringField, BooleanField
 from urllib.request import urlopen
 
-def _validate_link(form, field):
-    if not field.data:
-        return True
-    try:
-        urlopen(field.data)
-    except:
-        raise ValidationError('URL is unreachable')
 
 """def _validate_name(form, field):
     from swag.database import item_exists
@@ -34,7 +27,7 @@ class Item(FlaskForm):
     image = FileField('image', validators = [
         FileRequired(), FileAllowed(['jpg'])
     ])
-    link = StringField('link', validators = [_validate_link])
+    link = StringField('link', validators = [])
     name = StringField('name', validators = [DataRequired()])
     price = IntegerField('price', validators = [DataRequired(), _validate_integer])
     quantity = IntegerField('quantity', validators = [DataRequired(), _validate_integer])

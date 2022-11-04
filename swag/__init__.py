@@ -270,6 +270,7 @@ def edit(item_id):
             }
         )
     del item['image']
+    item['date'] = old_item['date']
     replace_item(old_item, item, session['userinfo']['preferred_username'])
     flash('Swag successfully submitted', 'successs')
     return redirect('/')
