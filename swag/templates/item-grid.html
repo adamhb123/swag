@@ -13,7 +13,14 @@
             </span>
             {% endif %}
             {% endif %}
-            <a href="/item/{{item._id}}">
+            <a href="/item/{{item._id}}" style="position: relative">
+                {% if item.purchase is defined %}
+                    {% if item.purchase.fulfilled %}
+                    <span class="badge badge-success badge-fulfillment-status">Fulfilled</span>
+                    {% else %}
+                    <span class="badge badge-warning badge-fulfillment-status">In Progress...</span>
+                    {% endif %}
+                    {% endif %}
                 <img alt="{{item.name}}" class="card-img" src="{{image_url}}/{{item._id}}.jpg" title="{{item.name}}">
             </a>
             <div class="card-body">
@@ -22,13 +29,7 @@
                     <!--{% if item.new %}
                     <span class="badge badge-primary">New</span>
                     {% endif %}-->
-                    {% if item.purchase is defined %}
-                    {% if item.purchase.fulfilled %}
-                    <span class="badge badge-success">Fulfilled</span>
-                    {% else %}
-                    <span class="badge badge-warning">In Progress...</span>
-                    {% endif %}
-                    {% endif %}
+                    
                 </h4>
                 <div class="card-details">
                     <hr class="card-divider" />

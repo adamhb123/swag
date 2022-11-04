@@ -152,8 +152,11 @@ h4.order-group-status-descriptor {
     margin-bottom: 0;
 }
 
-.card-title .badge {
-    float: right;
+ .badge.badge-fulfillment-status {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: .9rem;
 }
 
 .card-buy {
