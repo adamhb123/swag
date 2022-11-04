@@ -26,7 +26,7 @@
             <div class="card-body">
                 <h4 class="card-title">
                     <a href="/item/{{item._id}}">{{item.name}}</a>
-                    {% if item.purchase.quantity %}
+                    {% if item.purchase is defined %}
                     <span class="card-title-purchase-quantity">Quantity bought: {{item.purchase.quantity}}</span>
                     {% endif %}
                     <!--{% if item.new %}
