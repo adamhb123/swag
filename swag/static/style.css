@@ -18,10 +18,6 @@ h4.order-group-status-descriptor {
     opacity: 1;
 }
 
-.card.fulfilled button:hover {
-    all: unset;
-}
-
 .card.unfulfilled {
 }
 
