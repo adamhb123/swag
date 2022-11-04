@@ -10,8 +10,12 @@ h4.order-group-status-descriptor {
     margin: 0;
 }
 
-.card.fulfilled * {
-    opacity: .7;
+.card.fulfilled {
+    opacity: .5;
+}
+
+.card.fulfilled:hover {
+    opacity: 1;
 }
 
 .card.unfulfilled {
@@ -72,6 +76,7 @@ h4.order-group-status-descriptor {
 .nav-link.nav-restricted {
     color: hsl(64deg 100% 82% / 75%);;
 }
+
 .nav-link.nav-restricted:hover {
     color: #f9ffa4;
     font-weight: bold;
