@@ -2,7 +2,7 @@ from flask import session
 from wtforms.validators import DataRequired, Regexp, ValidationError
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField, FileRequired
-from wtforms import IntegerField, StringField, BooleanField
+from wtforms import IntegerField, StringField, BooleanField, FloatField
 from urllib.request import urlopen
 
 
@@ -15,8 +15,13 @@ def _validate_integer(form, field):
     try: int(field.data)
     except: raise ValidationError(f'"{field.data}" is not a valid integer')
 
+def _validate_float(form, field):
+    try: float(field.data)
+    except: raise ValidationError(f'"{field.data}" is not a valid float')
+
 def _validate_boolean(form, field):
-    return type(field.data) == bool
+    try: bool(field.data)
+    except: raise ValidationError(f'"{field.data}" is not a valid boolean')
 
 def _validate_seller(form, field):
     from swag.database import is_manager
@@ -29,7 +34,7 @@ class Item(FlaskForm):
     ])
     link = StringField('link', validators = [])
     name = StringField('name', validators = [DataRequired()])
-    price = IntegerField('price', validators = [DataRequired(), _validate_integer])
+    price = FloatField('price', validators = [DataRequired(), _validate_float])
     quantity = IntegerField('quantity', validators = [DataRequired(), _validate_integer])
     active = BooleanField('active', validators = [_validate_boolean])
     seller = StringField('seller', validators = [DataRequired(), _validate_seller])

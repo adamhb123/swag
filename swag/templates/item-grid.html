@@ -26,10 +26,12 @@
             <div class="card-body">
                 <h4 class="card-title">
                     <a href="/item/{{item._id}}">{{item.name}}</a>
+                    {% if item.purchase.quantity %}
+                    <span class="card-title-purchase-quantity">Quantity bought: {{item.purchase.quantity}}</span>
+                    {% endif %}
                     <!--{% if item.new %}
                     <span class="badge badge-primary">New</span>
                     {% endif %}-->
-                    
                 </h4>
                 <div class="card-details">
                     <hr class="card-divider" />
@@ -53,6 +55,12 @@
                                 class="card-detail-value card-purchase-date-value">{{ format_date(item.purchase.date)
                                 }}</span></span>
                     </div>
+
+                    <div class="row">
+                        <span class="card-detail card-purchase-quantity">Quantity: <span
+                                class="card-detail-value card-purchase-quantity-value">{{ item.purchase.quantity
+                                }}</span></span>
+                    </div>
                     {% if item.purchase.fulfilled %}
                     <div class="row">
                         <span class="card-detail card-purchase-date-fulfilled">Fulfilled: <span
@@ -73,7 +81,7 @@
                         </span>
                         <span class="card-detail">
                             {% if item.price is defined %}
-                            Price: <span class="price-value-span">${{item.price}}</span>
+                            Price: <span class="price-value-span">${{format_price(item.price)}}</span>
                             {% else %}
                             Price: <span class="price-value-span">$???</span>
                             {% endif %}
@@ -146,7 +154,7 @@
                                             <div class="card-price col">
                                                 <span>
                                                     {% if item.price is not none %}
-                                                    Price: <span class="price-value-span">${{item.price}}</span>
+                                                    Price: <span class="price-value-span">${{format_price(item.price)}}</span>
                                                     {% else %}
                                                     Price: <span class="price-value-span">$???</span>
                                                     {% endif %}

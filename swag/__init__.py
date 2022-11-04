@@ -55,7 +55,10 @@ def utility_functions():
     def format_date(date: datetime):
         return date.strftime('%m/%d/%Y')
 
-    return dict(mdebug=print_in_console, format_date=format_date)
+    def format_price(price: float):
+        return "{:.2f}".format(price)
+
+    return dict(mdebug=print_in_console, format_date=format_date, format_price=format_price)
 
 
 """@app.route('/api')

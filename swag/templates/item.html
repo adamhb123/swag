@@ -41,7 +41,7 @@
                     </li>-->
                     <div class="card-price">Price:
                         {% if item.price is not none %}
-                            <span class="price-value-span">${{item.price}}</span>
+                            <span class="price-value-span">${{format_price(item.price)}}</span>
                         {% else %}
                             <span>$???</span>
                         {% endif %}

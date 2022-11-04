@@ -149,7 +149,16 @@ h4.order-group-status-descriptor {
 }
 
 .card-title {
+    position: relative;
     margin-bottom: 0;
+}
+
+.card-title-purchase-quantity {
+    font-weight: bolder;
+    position: absolute;
+    font-size: .8rem;
+    bottom: 0;
+    right: 0;
 }
 
  .badge.badge-fulfillment-status {

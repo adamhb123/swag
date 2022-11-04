@@ -10,9 +10,9 @@ db.createCollection("items", {
                description: "'name' must be a string and is required"
             },
             price: {
-               bsonType: "int",
+               bsonType: "double",
                minimum: 0,
-               description: "'price' must be an integer >= 0 and is required"
+               description: "'price' must be a double >= 0 and is required"
             },
             quantity: {
                bsonType: "int",
@@ -52,9 +52,9 @@ db.createCollection("deletedItems", {
                description: "'name' must be a string and is required"
             },
             price: {
-               bsonType: "int",
+               bsonType: "double",
                minimum: 0,
-               description: "'price' must be an integer >= 0 and is required"
+               description: "'price' must be an double >= 0 and is required"
             },
             quantity: {
                bsonType: "int",
