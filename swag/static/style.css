@@ -6,6 +6,10 @@
     font-weight: bold;
 }
 
+.opaque {
+    opacity: 1 !important;
+}
+
 h4.order-group-status-descriptor {
     margin: 0;
 }

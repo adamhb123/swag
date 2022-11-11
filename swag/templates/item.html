@@ -26,9 +26,8 @@
                         {% if item.seller == 'CSH' %}
                         <strong>CSH</strong>
                         {% else %}
-                        <a href="https://profiles.csh.rit.edu/user/{{item.seller}}">
-                            <!--<img class="card-seller-img" alt="{{item.seller}}" src="https://profiles.csh.rit.edu/image/{{item.seller if item.seller != 'CSH' else 'potate'}}" title="{{item.seller}}">
-                            -->
+                        <a href="https://profiles.csh.rit.edu/user/{{item.seller}}">{{item.seller}}
+                            <!--<img class="card-seller-img" alt="{{item.seller}}" src="https://profiles.csh.rit.edu/image/{{item.seller if item.seller != 'CSH' else 'potate'}}" title="{{item.seller}}">-->
                         </a>
                         {% endif %}
                     </div>

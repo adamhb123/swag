@@ -185,6 +185,7 @@ def manage_purchases():
         **_get_template_variables()
     )
 
+
 @app.route('/order/<action>/<purchase_id>', methods=['POST'])
 @_auth.oidc_auth('default')
 @require_manager
@@ -194,19 +195,21 @@ def resolve_order(action, purchase_id):
             purchase_id = ObjectId(purchase_id)
         if action == "fulfill":
             if fulfill_purchase(purchase_id, request.args.get('payment-method', 'Not Specified')):
-                flash(f'Order \'{purchase_id}\' successfully finalized', 'success')
+                flash(
+                    f'Order \'{purchase_id}\' successfully finalized', 'success')
             else:
                 flash(f'Order \'{purchase_id}\' already finalized', 'warning')
 
         elif action == "cancel":
-            delete_purchase(purchase_id, session['userinfo']['preferred_username'])
+            delete_purchase(
+                purchase_id, session['userinfo']['preferred_username'])
         else:
             flash('Invalid order action', 'danger')
     else:
         flash('Access denied, halt your tomfoolery at once!')
-    
+
     return redirect('/manage-orders')
-    
+
 
 @app.route('/submit', methods=['GET', 'POST'])
 @_auth.oidc_auth('default')

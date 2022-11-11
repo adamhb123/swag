@@ -12,7 +12,6 @@ from bson.objectid import ObjectId
 
 
 _sub_regex = compile('(A|(An)|(The)) ')
-
 try:
     _database = MongoClient(
         f'mongodb://{environ["SWAG_MONGODB_USER"]}:{environ["SWAG_MONGODB_PASSWORD"]}@{environ.get("SWAG_MONGODB_HOST", "localhost")}/{environ["SWAG_MONGODB_DATABASE"]}',
