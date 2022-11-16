@@ -85,7 +85,7 @@ def _create_sort(arguments, **kwargs):
         return kwargs
 
 
-def delete_item(item_id: Union[str,ObjectId], requester):
+def delete_item(item_id: Union[str, ObjectId], requester):
     if type(item_id) == str:
         item_id = ObjectId(item_id)
     _purchase = _items.find_one({'_id': item_id})
@@ -276,17 +276,24 @@ def insert_purchase(item, quantity, buyer, fulfilled=False, paymentMethod=None):
     _purchases.insert_one(purchase)
 
     # Update item quantity in items db, set active to false if none left
+
     item = _items.find_one_and_update({'_id': item['_id']},
                                       [{"$set":
                                         {"quantity": {"$add": ["$quantity", -quantity]},
-                                         "active": {"$and": [{"$gt": ["$quantity", 0]}, {"$eq": ["$active", True]}]}}
-                                        }]
-                                      )
+                                         "active":
+                                            {"$cond": {
+                                                "if": {"$and": [{"$gt": ["$quantity", 0]}, {"$eq": ["$active", True]}]},
+                                                "then": True,
+                                                "else": False
+                                            }}
+                                         }
+                                        }])
     print(item)
 
 
 def fulfillment_guard(*args):
     func = args[0]
+
     def wrapper(*args, **kwargs):
         purchase = _purchases.find_one({'_id': args[0]})
         print("purchase fulfilled: " + str(purchase['fulfilled']))
